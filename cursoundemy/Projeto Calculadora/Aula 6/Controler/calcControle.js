@@ -20,7 +20,7 @@ class CalcController{
             this.setDisplayDateTime();
        }, 1000);
 
-
+       this.setlastnumbertodisplay();
 
 
     }
@@ -67,14 +67,21 @@ class CalcController{
      }
 
      calc(){
-        let last = this._operation.pop();
+
+        let last ='';
+        if (this._operation.length > 3 ){
+            last = this._operation.pop();
+        }
+        
         let result = eval(this._operation.join(""));
 
         if(last == '%'){
             result = result / 100;
             this._operation = [result];
         }else{
-            this._operation = [result, last];
+            this._operation = [result];
+
+            if(last) this._operation.push(last);
         }
 
         
@@ -91,6 +98,8 @@ class CalcController{
                 break;
             }
         }
+
+        if(!lastnumber) lastnumber = 0;
         this.dispayCalc = lastnumber; 
      }
 
@@ -162,6 +171,7 @@ class CalcController{
                         this.addOperator('%');
                     break;
                     case 'igual':
+                        this.calc();
                     
                     break;
 
